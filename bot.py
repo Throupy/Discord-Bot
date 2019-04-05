@@ -1,5 +1,6 @@
 """The script runs the bot."""
 import os
+import asyncio
 from discord.ext import commands
 from discord.utils import get
 import discord
@@ -27,7 +28,12 @@ async def on_member_join(ctx):
                   guild__name='Lube Lads',
                   name='welcome')
     await ctx.send(consts.welcomeDMMessage.format(ctx.name))
-    await channel.send(f"Welcome, {ctx.mention} to the server!")
+    msg = await channel.send(
+        f"Welcome, {ctx.mention} If you agree with the rules please react to the message"
+    )
+    reaction, user = await bot.wait_for('reaction_add')
+    role = get(ctx.guild.roles, name='Member')
+    await ctx.add_roles(role)
 
 
 @bot.event
