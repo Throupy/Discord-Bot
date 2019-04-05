@@ -11,7 +11,6 @@ bot = commands.Bot(command_prefix="~",
                    status=discord.Status.online,
                    activity=discord.Game(name="Fucking bitches"))
 
-
 @bot.event
 async def on_ready():
     """Run when the bot is ready."""
@@ -43,6 +42,18 @@ async def on_member_ban(ctx, member):
                   guild__name="Lube Lads",
                   name="announcements")
     await channel.send(f"{member.name} Just got banned from the server")
+
+@bot.event
+async def on_message(message):
+    channel = get(bot.get_all_channels(),
+                  guild__name="Lube Lads",
+                  name="announcements")
+    if message.channel.id == channel.id:
+        # If the message was NOT send by the bot
+        if message.author != bot:
+            await message.pin()
+            # Remove the crappy pin message
+            await message.channel.purge(limit=1)
 
 bot.load_extension("cogs.error_handler")
 bot.load_extension("cogs.main")
