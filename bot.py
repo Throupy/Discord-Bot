@@ -38,6 +38,7 @@ async def on_member_ban(ctx, member):
                   name="announcements")
     await channel.send(f"{member.name} Just got banned from the server")
 
+bot.load_extension("cogs.error_handler")
 bot.load_extension("cogs.main")
 token = os.environ.get("DISCORD_BOT_TOKEN")
 bot.run(token)
