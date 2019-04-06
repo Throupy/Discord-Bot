@@ -23,10 +23,12 @@ async def on_ready():
 @bot.event
 async def on_member_join(ctx):
     """Run when a new member joins."""
+    role = get(ctx.guild.roles, name="Newbie")
+    await ctx.add_roles(role)
     channel = bot.get_channel(consts.channels['welcome'])
     await ctx.send(consts.welcomeDMMessage.format(ctx.name))
-    msg = await channel.send(
-        f"Welcome, {ctx.mention} If you agree with the rules please react to the message"
+    await channel.send(
+        f"Welcome, {ctx.mention} please react to the message to get a role"
     )
     reaction, user = await bot.wait_for('reaction_add')
     role = get(ctx.guild.roles, name='Member')
@@ -39,13 +41,22 @@ async def on_member_ban(ctx, member):
     channel = bot.get_channel(consts.channels['announcements'])
     await channel.send(f"{member.name} Just got banned from the server")
 
+
 @bot.event
 async def on_message(message):
+    """Run when a user sends a message."""
     channel = bot.get_channel(consts.channels['announcements'])
     if message.channel == channel:
         # If the message was NOT send by the bot
         if message.author != bot:
             await message.pin()
+    # To stop dan from just saying 'gay'
+    if message.author.id == 306175377661886505 and \
+            'gay' in message.content.lower():
+        await message.delete()
+
+    await bot.process_commands(message)
+
 
 bot.load_extension("cogs.error_handler")
 bot.load_extension("cogs.main")
