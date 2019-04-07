@@ -42,8 +42,8 @@ class MainCog:
                        ("Joined On", f":date: {member.joined_at.date()}"),
                        ("Role(s)", f":bow:" + ''.join(
                         [str(role.mention) for role in member.roles[1:]]))],
-                            author=ctx.message.author,
-                            thumbnail=member.avatar_url).generate_embed()
+                        author=ctx.message.author,
+                        thumbnail=member.avatar_url).generate_embed()
         return await ctx.channel.send(embed=embed)
 
     @commands.command()
@@ -64,9 +64,15 @@ class MainCog:
                     # User has DMs from members disabled
                     except discord.errors.HTTPException:
                         pass
-        return await ctx.channel.send(
-                            f"Your report of {victim.mention} has been logged"
-                                      )
+        return await ctx.channel.send(":white_check_mark: Thank you")
+
+    @commands.command()
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def echo(self, ctx, *args):
+        """Run when the echo command is called."""
+        if args is None:
+            return await ctx.channel.send("Please do ~echo <message>")
+        return await ctx.channel.send(f"`{' '.join([x for x in args])}`")
 
 
 def setup(bot):

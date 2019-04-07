@@ -1,6 +1,5 @@
 """The script runs the bot."""
 import os
-import asyncio
 from discord.ext import commands
 from discord.utils import get
 import discord
@@ -10,6 +9,7 @@ consts = Consts()
 bot = commands.Bot(command_prefix="~",
                    status=discord.Status.online,
                    activity=discord.Game(name="Gaming"))
+
 
 @bot.event
 async def on_ready():
