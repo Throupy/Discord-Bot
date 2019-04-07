@@ -18,6 +18,8 @@ contact one of the server owners or administrators.
         'computing': 406586420468252673
     }
 
+    administrators = [403586211849175040, 547040529511088129]
+
     userInfo = {
         'joined_at': None,
         'nick': None,

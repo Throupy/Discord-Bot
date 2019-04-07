@@ -35,7 +35,8 @@ class MainCog:
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def whois(self, ctx, member: discord.Member = None):
         """Run when the whois command is called."""
-        print("Whois called")
+        if member is None:
+            return await ctx.channel.send("Please do: ~whois @user")
         embed = Embed([("Display Username", f":name_badge: {member.name}"),
                        ("Status", f":o:{str(member.status)}"),
                        ("Joined On", f":date: {member.joined_at.date()}"),
@@ -43,7 +44,29 @@ class MainCog:
                         [str(role.mention) for role in member.roles[1:]]))],
                             author=ctx.message.author,
                             thumbnail=member.avatar_url).generate_embed()
-        await ctx.channel.send(embed=embed)
+        return await ctx.channel.send(embed=embed)
+
+    @commands.command()
+    @commands.cooldown(1, 120, commands.BucketType.user)
+    async def report(self, ctx, victim: discord.Member, reason: str):
+        """Run when the report command is called."""
+        if victim is None or reason is None:
+            return await ctx.channel.send("Please do ~report <user> <reason>")
+        for member in ctx.guild.members:
+            for role in member.roles:
+                print(f"{role.name} - {role.id}")
+                # Administrator or owner
+                if role.id in self.CONSTS.administrators:
+                    try:
+                        await member.send("{} reported {} for {}".format(
+                                                ctx.author.name, victim, reason
+                                                ))
+                    # User has DMs from members disabled
+                    except discord.errors.HTTPException:
+                        pass
+        return await ctx.channel.send(
+                            f"Your report of {victim.mention} has been logged"
+                                      )
 
 
 def setup(bot):

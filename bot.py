@@ -54,7 +54,6 @@ async def on_message(message):
     if message.author.id == 306175377661886505 and \
             'gay' in message.content.lower():
         await message.delete()
-
     await bot.process_commands(message)
 
 
