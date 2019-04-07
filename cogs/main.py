@@ -41,9 +41,10 @@ class MainCog:
                        ("Status", f":o:{str(member.status)}"),
                        ("Joined On", f":date: {member.joined_at.date()}"),
                        ("Role(s)", f":bow:" + ''.join(
-                        [str(role.mention) for role in member.roles[1:]]))],
-                        author=ctx.message.author,
-                        thumbnail=member.avatar_url).generate_embed()
+                        [str(role.mention) for role in member.roles[1:]]))])
+        embed.author = ctx.message.author
+        embed.thumbnail = member.avatar_url
+        embed = embed.generate_embed()
         return await ctx.channel.send(embed=embed)
 
     @commands.command()
