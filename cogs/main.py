@@ -75,6 +75,20 @@ class MainCog:
             return await ctx.channel.send("Please do ~echo <message>")
         return await ctx.channel.send(f"`{' '.join([x for x in args])}`")
 
+    @commands.command()
+    @commands.cooldown(1, 30, commands.BucketType.user)
+    async def server(self, ctx):
+        """Run when the server command is called - gives info about server."""
+        guild = ctx.message.author.guild
+        embed = Embed([("Server Name", f":name_badge: {guild.name}"),
+                       ("Region", f":o:{guild.region}"),
+                       ("Owner", f":person_with_blond_hair: {guild.owner}"),
+                       ("Member Count", f":100: {guild.member_count}"),
+                       ("Date Created", f":date: {guild.created_at}")])
+        embed.thumbnail = guild.icon_url
+        embed = embed.generate_embed()
+        return await ctx.channel.send(embed=embed)
+
 
 def setup(bot):
     """Initialize and add to main script."""
