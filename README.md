@@ -11,3 +11,6 @@ Sends administrators a notification letting them know that someone has been repo
 
 #### `echo {message}`
 The bot will reply with what you tell it to.
+
+#### `server`
+The bot replies with information about the server
