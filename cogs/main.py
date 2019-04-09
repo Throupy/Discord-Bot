@@ -1,4 +1,6 @@
 """Cog for main commands."""
+import datetime
+from dateutil.relativedelta import relativedelta
 import discord
 from discord.ext import commands
 from utils.consts import Consts
@@ -88,6 +90,17 @@ class MainCog:
         embed.thumbnail = guild.icon_url
         embed = embed.generate_embed()
         return await ctx.channel.send(embed=embed)
+
+    @commands.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
+    async def gcses(self, ctx):
+        """Run when the gcse countdown command is called."""
+        today = datetime.datetime.today()
+        td = relativedelta(datetime.datetime(2019, 5, 13, 9, 0, 0), today)
+        return await ctx.channel.send(
+            "`{} months, {} weeks, {} days, {} hours {} minutes`".format(
+                td.months, td.weeks, td.days, td.hours, td.minutes
+            ))
 
 
 def setup(bot):
