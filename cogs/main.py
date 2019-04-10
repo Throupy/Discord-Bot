@@ -20,6 +20,15 @@ class MainCog:
         self.bot = bot
 
     @commands.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
+    async def roll(self, ctx, max: int = None):
+        """Run when the roll command is called."""
+        if not type(max) == int or not max or max < 0:
+            return await ctx.channel.send("Please do ~roll <max(int)>")
+        number = random.randint(1, max)
+        return await ctx.channel.send(f"`You rolled a {number}`")
+
+    @commands.command()
     @commands.cooldown(1, 15, commands.BucketType.user)
     async def clear(self, ctx, number: int = 10):
         """Clear messages."""
@@ -103,20 +112,6 @@ class MainCog:
             .format(
                 td.months, td.weeks, td.days, td.hours, td.minutes
             ))
-
-    @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
-    async def roll(self, ctx):
-        """Run when the roll command is called."""
-        number = random.randint(1, 6)
-        msg = await ctx.channel.send(f"`You rolled a {number}`")
-
-        def check(self, user):
-            """Check user integrity (check user != bot)."""
-            return user.id != 563815182892138507
-        await self.bot.wait_for('reaction_add', timeout=60.0,
-                                check=check)
-        return await msg.delete()
 
 
 def setup(bot):
