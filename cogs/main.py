@@ -1,5 +1,6 @@
 """Cog for main commands."""
 import datetime
+import random
 from dateutil.relativedelta import relativedelta
 import discord
 from discord.ext import commands
@@ -92,15 +93,30 @@ class MainCog:
         return await ctx.channel.send(embed=embed)
 
     @commands.command()
-    @commands.cooldown(1, 1, commands.BucketType.user)
+    @commands.cooldown(1, 10, commands.BucketType.user)
     async def gcses(self, ctx):
         """Run when the gcse countdown command is called."""
         today = datetime.datetime.today()
         td = relativedelta(datetime.datetime(2019, 5, 13, 9, 0, 0), today)
         return await ctx.channel.send(
-            "`{} months, {} weeks, {} days, {} hours {} minutes`".format(
+            "`{} months, {} weeks, {} days, {} hours {} minutes until GCSES!`"
+            .format(
                 td.months, td.weeks, td.days, td.hours, td.minutes
             ))
+
+    @commands.command()
+    @commands.cooldown(1, 1, commands.BucketType.user)
+    async def roll(self, ctx):
+        """Run when the roll command is called."""
+        number = random.randint(1, 6)
+        msg = await ctx.channel.send(f"`You rolled a {number}`")
+
+        def check(self, user):
+            """Check user integrity (check user != bot)."""
+            return user.id != 563815182892138507
+        await self.bot.wait_for('reaction_add', timeout=60.0,
+                                check=check)
+        return await msg.delete()
 
 
 def setup(bot):
