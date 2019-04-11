@@ -1,8 +1,9 @@
 # Discord-Bot
 A python discord bot
 
-## General Commands
 All commands require the `~` prefix
+
+## Main Cog Commands
 
 #### `roll {max number}`
 Replies with a number between 1 and a given number
@@ -24,3 +25,8 @@ The bot replies with information about the server
 
 #### `gcses`
 Gives you the time in months, weeks, days, hours etc until GCSEs 2019
+
+## Game Cog Commands
+
+#### `coins {@user}`
+Replies with how many coins a user has, or if you don't specify a user, how many coins the author has.
