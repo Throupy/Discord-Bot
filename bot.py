@@ -59,5 +59,6 @@ async def on_message(message):
 
 bot.load_extension("cogs.error_handler")
 bot.load_extension("cogs.main")
+bot.load_extension("cogs.game")
 token = os.environ.get("DISCORD_BOT_TOKEN")
 bot.run(token)
