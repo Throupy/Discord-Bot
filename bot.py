@@ -54,7 +54,10 @@ async def on_message(message):
     if message.author.id == 306175377661886505 and \
             'gay' in message.content.lower():
         await message.delete()
+    if any(sp in message.content.lower() for sp in consts.spanishLetters):
+        await message.add_reaction(u'\U0001F1EA\U0001F1F8')
     await bot.process_commands(message)
+
 
 
 bot.load_extension("cogs.error_handler")

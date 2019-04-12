@@ -1,8 +1,10 @@
 """Cog for main commands."""
+import requests
 import datetime
 import random
 from dateutil.relativedelta import relativedelta
 import discord
+from bs4 import BeautifulSoup
 from discord.ext import commands
 from utils.consts import Consts
 from utils.embedgenerator import Embed
@@ -112,6 +114,16 @@ class MainCog:
             .format(
                 td.months, td.weeks, td.days, td.hours, td.minutes
             ))
+
+    @commands.command()
+    @commands.cooldown(1, 15, commands.BucketType.user)
+    async def wotd(self, ctx):
+        """Run when the wotd command is called."""
+        r = requests.get("https://www.spanishdict.com/")
+        soup = BeautifulSoup(r.content, features="lxml")
+        spa = soup.find('a', {'class': 'wotd-sidebar-word'}).text
+        eng = soup.find('div', {'class': 'wotd-sidebar-translation'}).text
+        return await ctx.channel.send(f":flag_es:`{spa} - {eng}`:flag_es:")
 
 
 def setup(bot):

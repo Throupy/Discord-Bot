@@ -28,3 +28,5 @@ contact one of the server owners or administrators.
         'mention': None,
         'top_role': None
     }
+
+    spanishLetters = ['ñ', 'í', 'ó', 'é', 'á', '¿']
