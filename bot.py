@@ -59,7 +59,6 @@ async def on_message(message):
     await bot.process_commands(message)
 
 
-
 bot.load_extension("cogs.error_handler")
 bot.load_extension("cogs.main")
 bot.load_extension("cogs.game")

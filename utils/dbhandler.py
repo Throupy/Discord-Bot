@@ -31,6 +31,18 @@ class DBHandler:
             # Return 0 coins
             return 0
 
+    def addCoins(self, id, amount):
+        """Calculate new coins after add."""
+        currentCoins = self.getCoins(id)
+        newCoins = currentCoins + amount
+        self.setCoins(id, newCoins)
+
+    def setCoins(self, id, amount):
+        """Edit coins."""
+        self.cur.execute("UPDATE users SET coins = ? WHERE id = ?",
+                         (amount, id))
+        self.conn.commit()
+
     def addUser(self, id):
         """Add a user to the database."""
         self.cur.execute('INSERT INTO users(id,coins)VALUES(?,?)', (id, 50))

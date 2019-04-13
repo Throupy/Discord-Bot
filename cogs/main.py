@@ -14,7 +14,6 @@ class MainCog:
     """Main cog."""
 
     CONSTS = Consts()
-    WAIT_BEFORE_DELETE = 3
 
     def __init__(self, bot):
         """Initialize the cog."""
@@ -30,7 +29,7 @@ class MainCog:
         number = random.randint(1, max)
         return await ctx.channel.send(f"`You rolled a {number}`")
 
-    @commands.command()
+    @commands.command(aliases=['cls'])
     @commands.cooldown(1, 15, commands.BucketType.user)
     async def clear(self, ctx, number: int = 10):
         """Clear messages."""
@@ -45,7 +44,7 @@ class MainCog:
         return await ctx.channel.send(
                             "You don't have the `administrator` role!")
 
-    @commands.command()
+    @commands.command(aliases=['who'])
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def whois(self, ctx, member: discord.Member = None):
         """Run when the whois command is called."""
@@ -81,7 +80,7 @@ class MainCog:
                         pass
         return await ctx.channel.send(":white_check_mark: Thank you")
 
-    @commands.command()
+    @commands.command(aliases=['say'])
     @commands.cooldown(1, 5, commands.BucketType.user)
     async def echo(self, ctx, *args):
         """Run when the echo command is called."""
@@ -89,7 +88,7 @@ class MainCog:
             return await ctx.channel.send("Please do ~echo <message>")
         return await ctx.channel.send(f"`{' '.join([x for x in args])}`")
 
-    @commands.command()
+    @commands.command(aliases=['serverinfo', 'svinfo'])
     @commands.cooldown(1, 30, commands.BucketType.user)
     async def server(self, ctx):
         """Run when the server command is called - gives info about server."""
@@ -103,7 +102,7 @@ class MainCog:
         embed = embed.generate_embed()
         return await ctx.channel.send(embed=embed)
 
-    @commands.command()
+    @commands.command(aliases=['depressme', 'exams'])
     @commands.cooldown(1, 10, commands.BucketType.user)
     async def gcses(self, ctx):
         """Run when the gcse countdown command is called."""
@@ -115,7 +114,7 @@ class MainCog:
                 td.months, td.weeks, td.days, td.hours, td.minutes
             ))
 
-    @commands.command()
+    @commands.command(aliases=['word', 'wordoftheday', 'spaword'])
     @commands.cooldown(1, 15, commands.BucketType.user)
     async def wotd(self, ctx):
         """Run when the wotd command is called."""
