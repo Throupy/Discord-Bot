@@ -37,6 +37,12 @@ class DBHandler:
         newCoins = currentCoins + amount
         self.setCoins(id, newCoins)
 
+    def subtractCoins(self, id, amount):
+        """Calculate new coins after subtract."""
+        currentCoins = self.getCoins(id)
+        newCoins = currentCoins - amount
+        self.setCoins(id, newCoins)
+
     def setCoins(self, id, amount):
         """Edit coins."""
         self.cur.execute("UPDATE users SET coins = ? WHERE id = ?",

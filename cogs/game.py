@@ -32,6 +32,25 @@ class GameCog:
         self.dbhandler.addCoins(ctx.author.id, salary)
         return await ctx.channel.send(f"`You worked and got {salary} coins`")
 
+    @commands.command()
+    @commands.cooldown(1, 300, commands.BucketType.user)
+    async def crime(self, ctx):
+        """Commit a crime and get money."""
+        if random.randint(1, 2) == 1:
+            gained = random.randint(100, 500)
+            self.dbhandler.addCoins(ctx.author.id, gained)
+            await ctx.channel.send(
+                            f"`You committed a crime and got {gained}`")
+        else:
+            toSubtract = round(self.dbhandler.getCoins(ctx.author.id) * 0.03)
+            self.dbhandler.subtractCoins(ctx.author.id, toSubtract)
+            await ctx.channel.send(
+                                f"`You were caught and lost 3% of your coins`")
+        newAmt = self.dbhandler.getCoins(ctx.author.id)
+        return await ctx.channel.send(
+                                f"`Your new balance is {newAmt}`")
+
+
 
 def setup(bot):
     """Initialize and add to main script."""
