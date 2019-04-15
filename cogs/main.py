@@ -11,7 +11,7 @@ from utils.consts import Consts
 from utils.embedgenerator import Embed
 
 
-class MainCog:
+class MainCog(commands.Cog):
     """Main cog."""
 
     CONSTS = Consts()

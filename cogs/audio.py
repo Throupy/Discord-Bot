@@ -42,7 +42,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
                                           **CONSTS.ffmpeg_options), data=data)
 
 
-class AudioCog:
+class AudioCog(commands.Cog):
     """Cog for audio."""
 
     def __init__(self, bot):

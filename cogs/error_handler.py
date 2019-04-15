@@ -3,7 +3,7 @@ import sys
 from discord.ext import commands
 
 
-class CommandErrorHandler:
+class CommandErrorHandler(commands.Cog):
     """Error handler."""
 
     def __init__(self, bot):

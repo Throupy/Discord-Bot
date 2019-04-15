@@ -63,5 +63,6 @@ bot.load_extension("cogs.error_handler")
 bot.load_extension("cogs.main")
 bot.load_extension("cogs.game")
 bot.load_extension("cogs.audio")
-token = os.environ.get("DISCORD_BOT_TOKEN")
+with open("token.txt", "r") as tokenF:
+    token = tokenF.readlines()[0]
 bot.run(token)

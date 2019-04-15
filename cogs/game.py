@@ -5,7 +5,7 @@ from discord.ext import commands
 from utils.dbhandler import DBHandler
 
 
-class GameCog:
+class GameCog(commands.Cog):
     """Cog for games and fun."""
 
     def __init__(self, bot):
