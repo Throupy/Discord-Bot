@@ -1,3 +1,4 @@
+"""Error handler."""
 import traceback
 import sys
 from discord.ext import commands

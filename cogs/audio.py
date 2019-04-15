@@ -1,4 +1,6 @@
 """Cogs for audio."""
+import urllib
+import re
 import random
 import os
 import asyncio
@@ -70,8 +72,22 @@ class AudioCog(commands.Cog):
             pass
 
     @commands.command(aliases=['p'])
-    async def play(self, ctx, url):
+    async def play(self, ctx, *, search=None):
         """Run when the play commands is called."""
+        if search is None:
+            return await ctx.channel.send("Please do +play <search/URL>")
+        if search[0:4] == 'http':
+            url = search
+        else:
+            query_string = urllib.parse.urlencode({
+                'search_query': search
+            })
+            htm_content = urllib.request.urlopen(
+                'https://youtube.com/results?' + query_string
+            )
+            searchResults = re.findall('href=\"\\/watch\\?v=(.{11})',
+                                       htm_content.read().decode())
+            url = 'http://youtube.com/watch?v=' + searchResults[0]
         if ctx.author.voice is not None:
             if ctx.voice_client is not None:
                 await ctx.voice_client.move_to(ctx.author.voice.channel)
@@ -86,6 +102,11 @@ class AudioCog(commands.Cog):
                                   after=lambda e:
                                   print('Player error: %s' % e) if e else None)
         await ctx.send('Now playing: {}'.format(player.title))
+
+    @commands.command()
+    async def stop(self, ctx):
+        """Stop the playing video, if any."""
+        return ctx.voice_client.stop()
 
     @commands.command()
     async def pause(self, ctx):
