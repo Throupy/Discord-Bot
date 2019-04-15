@@ -10,6 +10,24 @@ If you have any problems with bots or have any complains please
 contact one of the server owners or administrators.
 """
 
+    ytdl_format_options = {
+        'format': 'bestaudio/best',
+        'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
+        'restrictfilenames': True,
+        'noplaylist': True,
+        'nocheckcertificate': True,
+        'ignoreerrors': False,
+        'logtostderr': False,
+        'quiet': True,
+        'no_warnings': True,
+        'default_search': 'auto',
+        'source_address': '0.0.0.0'
+    }
+
+    ffmpeg_options = {
+        'options': '-vn'
+    }
+
     channels = {
         'welcome': 563820994188541967,
         'announcements': 431933100122046470,

@@ -6,7 +6,7 @@ import discord
 from utils.consts import Consts
 
 consts = Consts()
-bot = commands.Bot(command_prefix="~",
+bot = commands.Bot(command_prefix="+",
                    status=discord.Status.online,
                    activity=discord.Game(name="Gaming"))
 

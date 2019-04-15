@@ -5,9 +5,7 @@ import datetime
 import random
 from dateutil.relativedelta import relativedelta
 import discord
-import youtube_dl
 from bs4 import BeautifulSoup
-from discord.utils import get
 from discord.ext import commands
 from utils.consts import Consts
 from utils.embedgenerator import Embed
