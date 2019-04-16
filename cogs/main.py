@@ -1,5 +1,6 @@
 """Cog for main commands."""
 import os
+import aiohttp
 import requests
 import datetime
 import random
@@ -115,14 +116,19 @@ class MainCog(commands.Cog):
                 td.months, td.weeks, td.days, td.hours, td.minutes
             ))
 
+    async def fetch(self, session, url):
+        async with session.get(url) as response:
+            return await response.text()
+
     @commands.command(aliases=['word', 'wordoftheday', 'spaword'])
     @commands.cooldown(1, 15, commands.BucketType.user)
     async def wotd(self, ctx):
         """Run when the wotd command is called."""
-        r = requests.get("https://www.spanishdict.com/")
-        soup = BeautifulSoup(r.content, features="lxml")
-        spa = soup.find('a', {'class': 'wotd-sidebar-word'}).text
-        eng = soup.find('div', {'class': 'wotd-sidebar-translation'}).text
+        async with aiohttp.ClientSession() as session:
+            html = await self.fetch(session, 'https://www.spanishdict.com/')
+            soup = BeautifulSoup(html, features="lxml")
+            spa = soup.find('a', {'class': 'wotd-sidebar-word'}).text
+            eng = soup.find('div', {'class': 'wotd-sidebar-translation'}).text
         return await ctx.channel.send(f":flag_es:`{spa} - {eng}`:flag_es:")
 
 
