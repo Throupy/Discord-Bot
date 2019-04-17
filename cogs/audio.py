@@ -51,7 +51,7 @@ class AudioCog(commands.Cog):
         """Initialize the bot."""
         self.bot = bot
 
-    @commands.command(aliases=['nanny', 'randomburfz'])
+    @commands.command(aliases=['randomburfz'])
     async def burfz(self, ctx):
         """Run when the burfz command is called."""
         try:
@@ -102,6 +102,26 @@ class AudioCog(commands.Cog):
                                   after=lambda e:
                                   print('Player error: %s' % e) if e else None)
         await ctx.send('Now playing: {}'.format(player.title))
+
+    @commands.command()
+    async def nanny(self, ctx):
+        """NANNY."""
+        if ctx.author.voice is not None:
+            if ctx.voice_client is not None:
+                await ctx.voice_client.move_to(ctx.author.voice.channel)
+            else:
+                await ctx.author.voice.channel.connect()
+        else:
+            return await ctx.channel.send(":x: Not in voice channel")
+        try:
+            burfVid = 'burfz/nanny.wav'
+            source = discord.PCMVolumeTransformer(
+                                            discord.FFmpegPCMAudio(burfVid))
+            return await ctx.voice_client.play(source)
+        except discord.errors.ClientException:
+            await ctx.channel.send(":x: Already playing audio")
+        except TypeError:
+            pass
 
     @commands.command()
     async def stop(self, ctx):

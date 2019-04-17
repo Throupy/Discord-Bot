@@ -1,7 +1,5 @@
 """Cog for main commands."""
-import os
 import aiohttp
-import requests
 import datetime
 import random
 from dateutil.relativedelta import relativedelta
@@ -117,6 +115,7 @@ class MainCog(commands.Cog):
             ))
 
     async def fetch(self, session, url):
+        """Fetch the word of the day."""
         async with session.get(url) as response:
             return await response.text()
 
